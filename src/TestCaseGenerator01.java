@@ -1,0 +1,2 @@
+public class TestCaseGenerator01 {
+}
