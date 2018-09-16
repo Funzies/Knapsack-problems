@@ -37,10 +37,15 @@ public class KnapsackDP01 {
                 table[i][j] = findMax(table, i, j);
             }
         }
+
+        printChoices();
         printTable(table);
+        getSolution(table);
     }
 
-
+    /**
+     * Finds the maximum value of either picking up the item or not
+     */
     public int findMax(int[][] table, int i, int j){
         Item candidate = items.get(i);
         if (j-candidate.getWeight() < 0){
@@ -49,17 +54,50 @@ public class KnapsackDP01 {
         return Math.max(table[i-1][j], table[i-1][j-candidate.getWeight()] + candidate.getValue());
     }
 
+    /**
+     * Finds the solution to the knapsack problem, given the completed table
+     */
+    public void getSolution(int[][] table){
+        ArrayList<Integer> solutions = new ArrayList<>();
+        int i = table.length-1;
+        int j = table[0].length-1;
+        while (i > 0){
+            if (table[i][j] > table[i-1][j]){ //this means we took the new item, i.
+                solutions.add(i);
+                i = i-1;
+                j = j - items.get(i).getWeight();
+            }
+            else { //we did not take item i.
+                i = i-1;
+            }
+        }
+        StringBuilder sb = new StringBuilder("Items to pick up are: ");
+        for (int s : solutions){
+            sb.append(s +", ");
+        }
+        System.out.println(sb.toString());
+    }
 
     /**
-     * testing purposes
+     * shows the choices to the knapsack problem
+     */
+    public void printChoices(){
+        for (int i=0; i < items.size(); i++) {
+            System.out.println("Item "+i+": value="+items.get(i).getValue()+", weight="+items.get(i).getWeight());
+        }
+    }
+
+
+    /**
+     * visualization purposes
      */
     public void printTable(int[][] table){
         for (int i = 0; i < table.length; i++) {
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < table[0].length; j++) {
-                sb.append(" "+Integer.toString(table[i][j])+" ");
+                sb.append(" "+Integer.toString(table[i][j]));
             }
-            System.out.println(sb.toString() + '\n');
+            System.out.println(sb.toString());
         }
     }
 
