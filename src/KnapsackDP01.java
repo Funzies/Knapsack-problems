@@ -7,19 +7,16 @@
 
 import java.util.ArrayList;
 public class KnapsackDP01 {
-    int capacity;
-    ArrayList<Item> items;
-
-
-    public KnapsackDP01(ArrayList<Item> items, int capacity){
-        this.capacity = capacity;
-        this.items = items;
-    }
+    private int capacity;
+    private ArrayList<Item> items;
 
     /**
      * Uses dynamic programming to find the optimal set of items
      */
-    public void findOptimal(){
+    public void findOptimal(ArrayList<Item> itemList, int capacity){
+        this.capacity = capacity;
+        this.items = itemList;
+        long startTime = System.nanoTime();
         int[][] table = new int[items.size()][capacity+1];
         //all values in column 0 equals 0 as capacity is 0
         for (int i = 0; i < items.size(); i++ ){
@@ -37,10 +34,12 @@ public class KnapsackDP01 {
                 table[i][j] = findMax(table, i, j);
             }
         }
-
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
         printChoices();
         printTable(table);
-        getSolution(table);
+        printSolution(table);
+        System.out.println("Time taken: " + duration +"\n --------------------");
     }
 
     /**
@@ -57,20 +56,25 @@ public class KnapsackDP01 {
     /**
      * Finds the solution to the knapsack problem, given the completed table
      */
-    public void getSolution(int[][] table){
+    public void printSolution(int[][] table){
         ArrayList<Integer> solutions = new ArrayList<>();
         int i = table.length-1;
         int j = table[0].length-1;
         while (i > 0){
             if (table[i][j] > table[i-1][j]){ //this means we took the new item, i.
                 solutions.add(i);
-                i = i-1;
                 j = j - items.get(i).getWeight();
+                i = i-1;
             }
             else { //we did not take item i.
                 i = i-1;
             }
         }
+        //check for if we picked up item 0
+        if(table[i][j] > 0){
+            solutions.add(i);
+        }
+        //print solutions
         StringBuilder sb = new StringBuilder("Items to pick up are: ");
         for (int s : solutions){
             sb.append(s +", ");
