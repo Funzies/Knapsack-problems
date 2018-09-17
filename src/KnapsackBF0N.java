@@ -12,7 +12,11 @@ public class KnapsackBF0N {
     private List<Item> fullItemSet;
     private List<List<Item>> allCombinations;
 
-
+    /**
+     * Solves the 0N knapsack problem using brute force
+     * @param capacity
+     * @param items
+     */
     public void solve(int capacity, ArrayList<Item> items){
         fullItemSet = new ArrayList<Item>();
         allCombinations = new ArrayList<List<Item>>();
@@ -22,13 +26,14 @@ public class KnapsackBF0N {
                 fullItemSet.add(i);
             }
         }
+        long startTime = System.nanoTime();
+
+        enumerate(new ArrayList<Item>(), fullItemSet);
 
         int maxValue = 0;
         int currentWeight;
         int currentValue;
         List<Item> solutionSet = new ArrayList<Item>();
-        enumerate(new ArrayList<Item>(), fullItemSet);
-
         //go through all the combinations and find the most valuable set which can fit into the knapsack
         for (List<Item> solution: allCombinations){
             currentWeight = 0;
@@ -42,11 +47,18 @@ public class KnapsackBF0N {
                 maxValue = currentValue;
             }
         }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
         printChoices(items);
         printSolution(solutionSet);
+        System.out.println("Time taken: " + duration +"\n --------------------");
     }
 
-
+    /**
+     * Adds to the list of all possible combinations of solutions to the problem using recursion
+     * @param solutions
+     * @param items
+     */
     private void enumerate(List<Item> solutions, List<Item> items) {
         allCombinations.add(solutions);
         //printSolution(solutions);

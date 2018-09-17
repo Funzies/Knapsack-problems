@@ -20,6 +20,8 @@ public class main {
             TestCaseGenerator0N tests = new TestCaseGenerator0N();
             KnapsackBF0N BF0N = new KnapsackBF0N();
             BF0N.solve(10, tests.test1);
+            BF0N.solve(10, tests.test2);
+            BF0N.solve(10, tests.test3);
         }
     }
 }
