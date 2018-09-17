@@ -1,5 +1,6 @@
 /**
  * Jack Huang
+ * 300343247
  * Comp361 Assignment 3
  *
  * Implementation of the 0-1 Knapsack problem using dynamic programming
