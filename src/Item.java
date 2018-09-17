@@ -7,6 +7,7 @@ public class Item{
     int value;
     int weight;
     int count;
+    int id;
 
     //constructor for 0-1 representation
     public Item(int value, int weight) {
@@ -15,10 +16,11 @@ public class Item{
     }
 
     //constructor for 0-n representation
-    public Item(int value, int weight, int count) {
+    public Item(int value, int weight, int count, int id) {
         this.value = value;
         this.weight = weight;
         this.count = count;
+        this.id = id;
     }
 
     public int getValue(){
