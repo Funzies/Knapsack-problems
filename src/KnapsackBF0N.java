@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Jack Huang
@@ -10,36 +9,47 @@ import java.util.List;
 
 public class KnapsackBF0N {
 
-    private int capacity;
-    private List<Item> items;
     private List<Item> fullItemSet;
-
     private List<List<Item>> allCombinations;
 
-    public KnapsackBF0N(int capacity, ArrayList<Item> items){
-        this.capacity = capacity;
-        this.items = items;
+
+    public void solve(int capacity, ArrayList<Item> items){
         fullItemSet = new ArrayList<Item>();
         allCombinations = new ArrayList<List<Item>>();
-        // converts the representation into a 0-1 of each possible item.
+        // converts the items into a 0-1 representation of each possible item.
         for (Item i: items){
             for (int x=0; x<i.getCount(); x++){
                 fullItemSet.add(i);
             }
         }
-        solve();
-    }
 
-    public void solve(){
-        int maxValue;
-        ArrayList<Item> solutionSet = new ArrayList<>();
+        int maxValue = 0;
+        int currentWeight;
+        int currentValue;
+        List<Item> solutionSet = new ArrayList<Item>();
         enumerate(new ArrayList<Item>(), fullItemSet);
+
+        //go through all the combinations and find the most valuable set which can fit into the knapsack
+        for (List<Item> solution: allCombinations){
+            currentWeight = 0;
+            currentValue = 0;
+            for (Item item : solution){
+                currentWeight += item.getWeight();
+                currentValue += item.getValue();
+            }
+            if (currentWeight <= capacity && currentValue > maxValue){
+                solutionSet = solution;
+                maxValue = currentValue;
+            }
+        }
+        printChoices(items);
+        printSolution(solutionSet);
     }
 
 
     private void enumerate(List<Item> solutions, List<Item> items) {
         allCombinations.add(solutions);
-        printSolution(solutions);
+        //printSolution(solutions);
         List<Item> tempList;
         List<Item> tempSolutions;
         if (!items.isEmpty()) {
@@ -53,10 +63,32 @@ public class KnapsackBF0N {
         }
     }
 
+    /**
+     * shows the choices to the knapsack problem
+     */
+    public void printChoices(List<Item> items){
+        for (int i=0; i < items.size(); i++) {
+            System.out.println("Item "+items.get(i).getID()+": value="+items.get(i).getValue()
+                    +", weight="+items.get(i).getWeight() +", count="+items.get(i).getCount());
+        }
+    }
+
+    /**
+     * prints out the solution to the knapsack problem.
+     */
+
     public void printSolution(List<Item> solutions){
         StringBuilder sb = new StringBuilder("Solution: ");
+        Map<Integer, Integer> map = new HashMap<>();
         for (Item i : solutions) {
-            sb.append(i.id+ " ");
+            Integer count = map.get(i.getID());
+            if(count == null){
+                map.put(i.getID(), 1);
+            }
+            else { map.put(i.getID(), count + 1); }
+        }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            sb.append("Item: "+entry.getKey() + "*" + entry.getValue()+", ");
         }
         System.out.println(sb.toString());
     }

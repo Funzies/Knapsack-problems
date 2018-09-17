@@ -33,6 +33,9 @@ public class Item{
     public int getCount(){
         return count;
     }
+    public int getID(){
+        return id;
+    }
 
 
 }
