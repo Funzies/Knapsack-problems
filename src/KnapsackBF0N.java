@@ -12,12 +12,17 @@ public class KnapsackBF0N {
     private List<Item> fullItemSet;
     private List<List<Item>> allCombinations;
 
+    int maxValue = 0;
+    List<Item> bestSolution = new ArrayList<Item>();
+    int capacity;
+
     /**
      * Solves the 0N knapsack problem using brute force
      * @param capacity
      * @param items
      */
     public void solve(int capacity, ArrayList<Item> items){
+        this.capacity = capacity;
         fullItemSet = new ArrayList<Item>();
         allCombinations = new ArrayList<List<Item>>();
         // converts the items into a 0-1 representation of each possible item.
@@ -30,27 +35,10 @@ public class KnapsackBF0N {
 
         enumerate(new ArrayList<Item>(), fullItemSet);
 
-        int maxValue = 0;
-        int currentWeight;
-        int currentValue;
-        List<Item> solutionSet = new ArrayList<Item>();
-        //go through all the combinations and find the most valuable set which can fit into the knapsack
-        for (List<Item> solution: allCombinations){
-            currentWeight = 0;
-            currentValue = 0;
-            for (Item item : solution){
-                currentWeight += item.getWeight();
-                currentValue += item.getValue();
-            }
-            if (currentWeight <= capacity && currentValue > maxValue){
-                solutionSet = solution;
-                maxValue = currentValue;
-            }
-        }
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         printChoices(items);
-        printSolution(solutionSet);
+        printSolution(bestSolution);
         System.out.println("Time taken: " + duration +"\n --------------------");
     }
 
@@ -61,7 +49,7 @@ public class KnapsackBF0N {
      */
     private void enumerate(List<Item> solutions, List<Item> items) {
         allCombinations.add(solutions);
-        //printSolution(solutions);
+        checkIfBest(solutions);
         List<Item> tempList;
         List<Item> tempSolutions;
         if (!items.isEmpty()) {
@@ -72,6 +60,24 @@ public class KnapsackBF0N {
                 tempSolutions.add(items.get(i));
                 enumerate(tempSolutions, tempList);
             }
+        }
+    }
+
+    /**
+     * Checks if the given solution set is the best so far
+     * @param solution
+     */
+    public void checkIfBest(List<Item> solution){
+        int currentWeight = 0;
+        int currentValue = 0;
+        //calculate the weight and value of solution
+        for (Item item : solution){
+            currentWeight += item.getWeight();
+            currentValue += item.getValue();
+        }
+        if (currentWeight <= capacity && currentValue > maxValue){
+            bestSolution = solution;
+            maxValue = currentValue;
         }
     }
 
@@ -102,6 +108,7 @@ public class KnapsackBF0N {
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             sb.append("Item: "+entry.getKey() + "*" + entry.getValue()+", ");
         }
+        sb.append("with value "+ maxValue);
         System.out.println(sb.toString());
     }
 }

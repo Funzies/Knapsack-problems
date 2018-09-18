@@ -19,9 +19,14 @@ public class main {
         else if (args[0].equals("BF0N")) {
             TestCaseGenerator0N tests = new TestCaseGenerator0N();
             KnapsackBF0N BF0N = new KnapsackBF0N();
-            BF0N.solve(10, tests.test1);
-            BF0N.solve(10, tests.test2);
-            BF0N.solve(10, tests.test3);
+            BF0N.solve(10, tests.test1); //test with 3 items with possible 3 count, 10 capacity
+            BF0N.solve(10, tests.test2); //test with 4 items with possible 3 count, 10 capacity
+
+            BF0N.solve(20, tests.test1); //test with 3 items with possible 3 count, 20 capacity
+            BF0N.solve(20, tests.test2); //test with 4 items with possible 3 count, 20 capacity
+
+            BF0N.solve(30, tests.test1); //test with 3 items with possible 3 count, 30 capacity
+            BF0N.solve(30, tests.test2); //test with 4 items with possible 3 count, 30 capacity
         }
     }
 }

@@ -32,20 +32,20 @@ public class TestCaseGenerator01 {
         ArrayList<Item> items = new ArrayList<Item>();
         items.add(new Item(52, 10));
         items.add(new Item(10, 1));
-        items.add(new Item(10, 1));
+        items.add(new Item(30, 5));
         items.add(new Item(11, 1));
-        items.add(new Item(40, 6));
+        items.add(new Item(35, 6));
         items.add(new Item(14, 2));
-        items.add(new Item(32, 7));
+        items.add(new Item(40, 7));
         items.add(new Item(50, 9));
         items.add(new Item(20, 3));
         items.add(new Item(29, 5));
         items.add(new Item(28, 4));
         items.add(new Item(34, 3));
-        items.add(new Item(40, 2));
-        items.add(new Item(17, 2));
+        items.add(new Item(14, 2));
+        items.add(new Item(44, 8));
         items.add(new Item(16, 2));
-        items.add(new Item(12, 1));
+        items.add(new Item(37, 6));
         return items;
     }
 }

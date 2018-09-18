@@ -4,8 +4,7 @@ import java.util.Random;
 public class TestCaseGenerator0N {
 
     public ArrayList<Item> test1 = generateTestCases(3, 3);
-    public ArrayList<Item> test2 = generateTestCases(5, 3);
-    public ArrayList<Item> test3 = generateTestCases(7, 3);
+    public ArrayList<Item> test2 = generateTestCases(4, 3);
 
 
     public ArrayList<Item> generateTestCases(int size, int maxCount){
