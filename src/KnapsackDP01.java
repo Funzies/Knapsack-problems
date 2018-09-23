@@ -58,12 +58,14 @@ public class KnapsackDP01 {
      * Finds the solution to the knapsack problem, given the completed table
      */
     public void printSolution(int[][] table){
+        int value = 0;
         ArrayList<Integer> solutions = new ArrayList<>();
         int i = table.length-1;
         int j = table[0].length-1;
         while (i > 0){
             if (table[i][j] > table[i-1][j]){ //this means we took the new item, i.
                 solutions.add(i);
+                value += items.get(i).getValue();
                 j = j - items.get(i).getWeight();
                 i = i-1;
             }
@@ -74,12 +76,14 @@ public class KnapsackDP01 {
         //check for if we picked up item 0
         if(table[i][j] > 0){
             solutions.add(i);
+            value += items.get(i).getValue();
         }
         //print solutions
         StringBuilder sb = new StringBuilder("Items to pick up are: ");
         for (int s : solutions){
             sb.append(s +", ");
         }
+        sb.append("with value "+value+".");
         System.out.println(sb.toString());
     }
 

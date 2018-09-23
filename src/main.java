@@ -50,7 +50,19 @@ public class main {
             TestCaseGenerator0N tests = new TestCaseGenerator0N();
             KnapsackGS0N GS0N = new KnapsackGS0N();
             GS0N.solve(10, tests.test1); //test with 4 items total, 10 capacity
+            GS0N.solve(10, tests.test2); //test with 7 items total, 10 capacity
+            GS0N.solve(10, tests.test3); //test with 10 items total, 10 capacity
 
+            GS0N.solve(20, tests.test1); //test with 4 items total, 20 capacity
+            GS0N.solve(20, tests.test2); //test with 7 items total, 20 capacity
+            GS0N.solve(30, tests.test3); //test with 10 items total, 20 capacity
+
+            GS0N.solve(30, tests.test1); //test with 4 items total, 30 capacity
+            GS0N.solve(30, tests.test2); //test with 7 items total, 30 capacity
+            GS0N.solve(30, tests.test3); //test with 10 items total, 30 capacity
+        }
+        else {
+            System.out.println("Invalid argument - enter either 'DP01', 'BF0N', 'DP0N' or 'GS0N' as an argument");
         }
     }
 }

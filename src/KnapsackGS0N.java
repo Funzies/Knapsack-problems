@@ -6,6 +6,7 @@
  * Implementation of the 0-N Knapsack problem using graph search
  */
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class KnapsackGS0N {
@@ -25,8 +26,14 @@ public class KnapsackGS0N {
                 fullItemSet.add(i);
             }
         }
+        long startTime = System.nanoTime();
         int[] solution = new int[fullItemSet.size()]; //binary array of solution
         graphSearch(0, 0, solution);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        printChoices();
+        printSolution();
+        System.out.println("Time taken: " + duration +"\n --------------------");
     }
 
     /**
@@ -36,15 +43,16 @@ public class KnapsackGS0N {
         if (depth == fullItemSet.size()){
             if (maxValue < currentValue && checkWeight(currentSolution)){
                 maxValue = currentValue;
-                bestSolution = currentSolution;
+                bestSolution = Arrays.copyOf(currentSolution, currentSolution.length);
             }
         }
         else {
             //add item at depth to solution
             int[] tempSolution = currentSolution;
             tempSolution[depth] = 1;
-            int tempValue = currentValue += fullItemSet.get(depth).getValue();
-            graphSearch(depth+1, tempValue, tempSolution);
+            int tempValue = currentValue;
+            tempValue += fullItemSet.get(depth).getValue();
+            graphSearch(depth + 1, tempValue, tempSolution);
 
             //don't add item at depth to solution
             tempSolution = currentSolution;
@@ -69,6 +77,29 @@ public class KnapsackGS0N {
             return true;
         }
         return false;
+    }
+
+    /**
+     * shows the choices to the knapsack problem
+     */
+    public void printChoices(){
+        for (int i=0; i < fullItemSet.size(); i++) {
+            System.out.println("Item "+i+": value="+fullItemSet.get(i).getValue()+", weight="+fullItemSet.get(i).getWeight());
+        }
+    }
+
+    /**
+     * Print solution to the knapsack problem
+     */
+    public void printSolution(){
+        StringBuilder sb = new StringBuilder("Items to take are: ");
+        for (int i=0; i<fullItemSet.size(); i++){
+            if (bestSolution[i] == 1){
+                sb.append("item "+i+", ");
+            }
+        }
+        sb.append("with value "+maxValue+".");
+        System.out.println(sb.toString());
     }
 
 }
