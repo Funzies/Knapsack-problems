@@ -16,12 +16,14 @@ public class KnapsackBF0N {
     List<Item> bestSolution = new ArrayList<Item>();
     int capacity;
 
+
     /**
      * Solves the 0N knapsack problem using brute force
      * @param capacity
      * @param items
      */
     public void solve(int capacity, ArrayList<Item> items){
+        maxValue = 0;
         this.capacity = capacity;
         fullItemSet = new ArrayList<Item>();
         allCombinations = new ArrayList<List<Item>>();
