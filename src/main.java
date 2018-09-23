@@ -46,5 +46,11 @@ public class main {
             DP0N.solve(30, tests.test2); //test with 7 items total, 30 capacity
             DP0N.solve(30, tests.test3); //test with 10 items total, 30 capacity
         }
+        else if (args[0].equals("GS0N")) {
+            TestCaseGenerator0N tests = new TestCaseGenerator0N();
+            KnapsackGS0N GS0N = new KnapsackGS0N();
+            GS0N.solve(10, tests.test1); //test with 4 items total, 10 capacity
+
+        }
     }
 }
